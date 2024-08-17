@@ -1,0 +1,14 @@
+<div class="main">
+  <form (ngSubmit)="createRoom(roomForm)" #roomForm="ngForm" class="form">
+    <label for="gameName" class="form__label">Nombre de la partida</label>
+    <input
+      type="text"
+      class="form__input"
+      autocomplete="off"
+      name="gameName"
+      [(ngModel)]="gameName"
+      required
+    />
+    <app-button type="submit" [text]="'Crear partida'" />
+  </form>
+</div>
