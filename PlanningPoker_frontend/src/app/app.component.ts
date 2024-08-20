@@ -15,9 +15,9 @@ export class AppComponent {
 
   constructor(private socketService: SocketService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { /* TODO document why this method 'ngOnInit' is empty */ }
 
-  validateGameName({gameName}: any): boolean {
+  validateGameName(gameName: string): boolean {
     const hasInvalidChars = /[_.#,*\\/-]/.test(gameName);
     const isOnlyNumbers = /^\d+$/.test(gameName);
     const hasMoreThanThreeNumbers = (gameName.match(/\d/g) || []).length > 3;
@@ -45,7 +45,7 @@ export class AppComponent {
   }
 
   createRoom(form?: NgForm) {
-    if (this.validateGameName(form?.value)) {
+    if (this.validateGameName(form?.value.gameName)) {
       this.socketService.createRoom(this.gameName).then((data) => {
         this.gameId = data.gameId;
         form?.reset();
