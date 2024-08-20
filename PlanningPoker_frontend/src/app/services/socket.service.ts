@@ -5,42 +5,17 @@ import { io, Socket } from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketService {
-  private socket: Socket | undefined;
+  private socket: Socket;
 
   constructor() {
+    this.socket = io('http://localhost:3000');
   }
 
-  startConnection() {
-    if (!this.socket) {
-      this.socket = io('http://localhost:3000'); // Cambia la URL a la de tu servidor
-      console.log('Socket connected:', this.socket);
-    }
-  }
-
-  createRoom(gameName: string) {
-    if (this.socket) {
-      this.socket.emit('createRoom', gameName);
-      this.socket.on("gameCreated", (data: any) => {
-        console.log("RoomID: ", data.gameId)
-      })
-    }
-  }
-
-  joinRoom(roomId: string) {
-    if (this.socket) {
-      this.socket.emit('joinRoom', roomId);
-    }
-  }
-
-  onNewVote(callback: (vote: any) => void) {
-    if (this.socket) {
-      this.socket.on('newVote', callback);
-    }
-  }
-
-  sendVote(vote: any) {
-    if (this.socket) {
-      this.socket.emit('vote', vote);
-    }
+  createRoom(gameName: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this.socket.emit('createRoom', { gameName });
+        this.socket.once('gameCreated', (data: any) => resolve(data));
+        this.socket.once('error', (data: any) => reject(data));
+    });
   }
 }

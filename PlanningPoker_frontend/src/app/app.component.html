@@ -1,5 +1,5 @@
 <div class="main">
-  <form (ngSubmit)="createRoom(roomForm)" #roomForm="ngForm" class="form">
+  <form #roomForm="ngForm" (ngSubmit)="createRoom(roomForm)" class="form" *ngIf="!gameId">
     <label for="gameName" class="form__label">Nombre de la partida</label>
     <input
       type="text"
@@ -9,6 +9,12 @@
       [(ngModel)]="gameName"
       required
     />
-    <app-button type="submit" [text]="'Crear partida'" />
+    <div *ngIf="errorMessage" class="error__messages">
+      <p>{{ errorMessage }}</p>
+    </div>
+    <button type="submit" class="form__button" [ngClass]="{'button__disabled': !gameName}" [disabled]="!gameName">Crear partida</button>
   </form>
+  <div *ngIf="gameId">
+    <app-table></app-table>
+  </div>
 </div>
