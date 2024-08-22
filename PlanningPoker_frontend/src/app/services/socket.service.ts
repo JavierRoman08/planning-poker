@@ -18,4 +18,11 @@ export class SocketService {
         this.socket.once('error', (data: any) => reject(data));
     });
   }
+
+  joinRoom(roomId: string, playerInfo: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit('joinRoom', roomId, playerInfo);
+      this.socket.once('joinedRoom', (data: any) => resolve(data))
+    })
+  }
 }

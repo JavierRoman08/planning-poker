@@ -1,4 +1,5 @@
 .btn {
+    transition: 0.5s;
     background-color: white;
     color: #330072;
     padding: 12px 24px !important;
@@ -8,4 +9,11 @@
     margin: auto !important;
     border-radius: 50px;
     cursor: pointer;
+    border: none !important;
+}
+
+.btn__disabled {
+    color: #9D9DA199;
+    cursor: not-allowed;
+    background-color: #9D9DA14D;
 }

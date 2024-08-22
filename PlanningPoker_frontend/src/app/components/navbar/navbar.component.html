@@ -1,1 +1,13 @@
-<p>navbar works!</p>
+<div class="navbar row">
+    <div class="navbar__brand row">    
+        <img src="assets/logo-poker.png" alt="" class="navbar__image">
+        <p class="font-color">Crear partida</p>
+    </div>
+    <h1 class="font-color" *ngIf="gameId"> {{gameName}} </h1>
+    <div class="row">
+        <div>
+            {{playerName}}
+        </div>
+        <button class="navbar__invite font-color">Invitar Jugadores</button>
+    </div>
+</div>

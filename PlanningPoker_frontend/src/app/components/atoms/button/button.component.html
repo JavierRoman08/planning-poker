@@ -1,0 +1,8 @@
+<button 
+  [type]="buttonType" 
+  class="btn" 
+  [ngClass]="{'btn__disabled': isActive}" 
+  [disabled]="isActive"
+  (click)="onClick()">
+  {{ text }}
+</button>

@@ -4,3 +4,13 @@
     padding: 0px !important;
     font-family: 'Poppins', sans-serif !important;
 }
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.font-color {
+    color: white;
+}

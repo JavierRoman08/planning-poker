@@ -1,0 +1,31 @@
+.navbar {
+    width: 100%;
+    margin: auto !important;
+    justify-content: space-between;
+    align-items: center !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 0px !important;
+}
+
+.navbar__brand {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.navbar__image {
+    width: 60px;
+    height: 60px;
+    margin: 0px 20px !important;
+}
+
+.navbar__invite {
+    border-radius: 50px;
+    padding: 10px 20px !important;
+    background: none !important;
+    border: 2px solid #F6F7FC;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 20px !important;
+}
