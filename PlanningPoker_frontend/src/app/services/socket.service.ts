@@ -31,4 +31,13 @@ export class SocketService {
       });
     });
   }
+
+  onSelectCard(gameId: string, player: any): Observable<any> { 
+    this.socket.emit("selectCard", gameId, player)
+    return new Observable((observer) => {
+      this.socket.on('selectedCard', (data) => {
+        observer.next(data);
+      });
+    });
+  }
 }

@@ -3,6 +3,7 @@
   [playerName]="registeredPlayer.nickname"
 >
 </app-navbar>
+<app-toast></app-toast>
 <form
   #playerForm="ngForm"
   (ngSubmit)="createPlayer(playerForm)"
@@ -51,13 +52,13 @@
 <div *ngIf="gameId && isNewPlayer" class="gameContainer">
   <div class="ellipse-container">
     <app-table />
-    <app-avatar
+    <app-player-card
       *ngFor="let player of playerList; let i = index"
       class="ellipse-item"
       [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
       [playerName]="player.nickname"
     >
-    </app-avatar>
+    </app-player-card>
   </div>
   <div class="cards">
     <h1>Elige una Carta 👇</h1>

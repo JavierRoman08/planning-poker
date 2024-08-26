@@ -47,7 +47,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("joinRoom", (gameId, data) => {
-    console.log(data)
     const game = games[gameId]
 
     if (game) {
@@ -63,6 +62,19 @@ io.on("connection", (socket) => {
     } else {
       socket.emit("error", { message: "Game not found" });
     }
+  })
+
+  socket.on("selectCard", (gameId, player) => {
+    const game = games[gameId]
+
+    console.log(player)
+
+    if(game) {
+      io.to(gameId).emit("selectedCard", {message: `${player.nickname} has choosen a card`})
+    } else {
+      socket.emit("error", { message: "An error has ocurred" });
+    }
+
   })
 
   socket.on("disconnect", () => {

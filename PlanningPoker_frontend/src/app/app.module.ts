@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TableComponent } from './components/table/table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LabelComponent } from './components/atoms/label/label.component';
 import { InputComponent } from './components/atoms/input/input.component';
 import { RadioComponent } from './components/atoms/radio/radio.component';
 import { FieldComponent } from './components/molecules/field/field.component';
@@ -18,6 +16,9 @@ import { CardComponent } from './components/atoms/card/card.component';
 import { AvatarComponent } from './components/atoms/avatar/avatar.component';
 import { GameComponent } from './components/pages/game/game.component';
 import { HomeComponent } from './components/pages/home/home.component';
+import { LabelComponent } from './components/atoms/label/label.component';
+import { PlayerCardComponent } from './components/molecules/player-card/player-card.component';
+import { ToastComponent } from './components/atoms/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { HomeComponent } from './components/pages/home/home.component';
     CardComponent,
     AvatarComponent,
     GameComponent,
-    HomeComponent
+    HomeComponent,
+    PlayerCardComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
