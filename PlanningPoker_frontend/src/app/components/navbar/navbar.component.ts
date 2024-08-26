@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() gameId: string | undefined;
+  @Input() gameId: string | null = "";
   @Input() gameName: string | undefined;
-  @Input() playerName: string | undefined;
+  @Input() playerName: string = "";
 }

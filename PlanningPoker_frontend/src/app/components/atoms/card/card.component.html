@@ -1,0 +1,7 @@
+<button
+  class="card font-color row"
+  (click)="onClickFn()"
+  [ngClass]="{'card__selected': isSelected, 'card__spectator': playerType == 'spectator', 'card__player': playerType == 'player' }"
+>
+  {{ value }}
+</button>

@@ -15,6 +15,9 @@ import { GameFormComponent } from './components/organisms/game-form/game-form.co
 import { ButtonComponent } from './components/atoms/button/button.component';
 import { ErrorComponent } from './components/atoms/error/error.component';
 import { CardComponent } from './components/atoms/card/card.component';
+import { AvatarComponent } from './components/atoms/avatar/avatar.component';
+import { GameComponent } from './components/pages/game/game.component';
+import { HomeComponent } from './components/pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { CardComponent } from './components/atoms/card/card.component';
     PlayerFormComponent,
     GameFormComponent,
     ErrorComponent,
-    CardComponent
+    CardComponent,
+    AvatarComponent,
+    GameComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

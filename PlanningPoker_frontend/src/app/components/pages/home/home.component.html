@@ -1,0 +1,28 @@
+<app-navbar
+  [gameName]="gameName"
+  [gameId]="gameId"
+  [playerName]="registeredPlayer.nickname"
+/>
+<form
+  #roomForm="ngForm"
+  (ngSubmit)="createRoom(roomForm)"
+  class="form"
+  *ngIf="!gameId"
+>
+  <label for="gameName" class="form__label">Nombre de la partida</label>
+  <input
+    type="text"
+    class="form__input"
+    autocomplete="off"
+    name="gameName"
+    [(ngModel)]="gameName"
+    required
+  />
+  <app-error [errorMessage]="errorMessage"></app-error>
+  <app-button
+    [isActive]="!gameName"
+    [text]="'Crear partida'"
+    [buttonType]="'submit'"
+  >
+  </app-button>
+</form>

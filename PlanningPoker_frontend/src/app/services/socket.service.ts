@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 
 @Injectable({
@@ -19,10 +20,15 @@ export class SocketService {
     });
   }
 
-  joinRoom(roomId: string, playerInfo: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.socket.emit('joinRoom', roomId, playerInfo);
-      this.socket.once('joinedRoom', (data: any) => resolve(data))
-    })
+  joinRoom(roomId: string, playerInfo: any){
+    this.socket.emit('joinRoom', roomId, playerInfo);
+  }
+
+  onPlayerJoin(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('joinedRoom', (players) => {
+        observer.next(players);
+      });
+    });
   }
 }

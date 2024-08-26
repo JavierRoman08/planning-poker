@@ -1,0 +1,23 @@
+.card {
+    width: 50px;
+    height: 80px;
+    border-radius: 7px;
+    border: 1px solid #BB65FF;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 18px;
+    font-weight: bold !important;
+    cursor: pointer;
+    background: none !important;
+}
+
+.card__selected {
+    background: #E4A4FF !important;
+    color: #6429CD;
+    transition: 0.5s;
+}
+
+.card__spectator {
+    background: #BDBDFF !important;
+    color: #330072;
+}

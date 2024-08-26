@@ -41,10 +41,29 @@ io.on("connection", (socket) => {
 
     socket.join(gameId); 
     
-    socket.emit("gameCreated", { gameId, gameName: data.gameName });
+    socket.emit("gameCreated", { gameId, gameName: games[gameId].name });
 
     console.log(`Game created: ${data.gameName} with ID ${gameId}`);
   });
+
+  socket.on("joinRoom", (gameId, data) => {
+    console.log(data)
+    const game = games[gameId]
+
+    if (game) {
+
+      const player = { nickname: data.nickname, role: data.role, isAdmin: data.isAdmin };
+      game.players.push(player);
+      
+      socket.join(gameId);
+
+      console.log(`${player.nickname} joined game: ${game.name}`);
+      io.to(gameId).emit("joinedRoom", {players: game.players});
+
+    } else {
+      socket.emit("error", { message: "Game not found" });
+    }
+  })
 
   socket.on("disconnect", () => {
     console.log("user disconnected");

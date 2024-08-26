@@ -3,10 +3,11 @@
     margin: auto !important;
     justify-content: space-between;
     align-items: center !important;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     padding: 20px 0px !important;
+    z-index: 2;
 }
 
 .navbar__brand {
@@ -17,7 +18,10 @@
 .navbar__image {
     width: 60px;
     height: 60px;
-    margin: 0px 20px !important;
+}
+
+.navbar__title {
+    text-align: center;
 }
 
 .navbar__invite {
@@ -27,5 +31,5 @@
     border: 2px solid #F6F7FC;
     cursor: pointer;
     font-weight: bold;
-    margin-right: 20px !important;
+    z-index: 5;
 }

@@ -1,0 +1,74 @@
+<app-navbar
+  [gameId]="gameId"
+  [playerName]="registeredPlayer.nickname"
+>
+</app-navbar>
+<form
+  #playerForm="ngForm"
+  (ngSubmit)="createPlayer(playerForm)"
+  class="form player__form"
+  *ngIf="gameId && !isNewPlayer"
+>
+  <label for="nickname" class="form__label">Tu nombre</label>
+  <input
+    type="text"
+    class="form__input"
+    autocomplete="off"
+    name="nickname"
+    [(ngModel)]="player.nickname"
+    required
+  />
+  <div class="row gap player__form__options">
+    <label class="font-color gap custom-radio">
+      Jugador
+      <input
+        type="radio"
+        name="role"
+        value="player"
+        [(ngModel)]="player.role"
+      />
+      <span class="radio__button"></span>
+    </label>
+    <label class="font-color gap custom-radio">
+      Espectador
+      <input
+        type="radio"
+        name="role"
+        value="spectator"
+        [(ngModel)]="player.role"
+      />
+      <span class="radio__button"></span>
+    </label>
+  </div>
+  <app-error [errorMessage]="errorPlayerMessage"></app-error>
+  <app-button
+    [isActive]="!player.nickname"
+    [text]="'Continuar'"
+    [buttonType]="'submit'"
+  >
+  </app-button>
+</form>
+<div *ngIf="gameId && isNewPlayer" class="gameContainer">
+  <div class="ellipse-container">
+    <app-table />
+    <app-avatar
+      *ngFor="let player of playerList; let i = index"
+      class="ellipse-item"
+      [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
+      [playerName]="player.nickname"
+    >
+    </app-avatar>
+  </div>
+  <div class="cards">
+    <h1>Elige una Carta 👇</h1>
+    <div class="cards__list row">
+      <app-card
+        *ngFor="let value of cards"
+        [value]="value"
+        (clickEvent)="handleClick($event)"
+        [isSelected]="value == selectedCardValue"
+        [playerType]="registeredPlayer.role"
+      ></app-card>
+    </div>
+  </div>
+</div>
