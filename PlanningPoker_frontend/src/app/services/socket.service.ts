@@ -52,6 +52,14 @@ export class SocketService {
     });
   }
 
+  broadcastCardVisibility(showCard: boolean): void {
+    this.socket.emit('cardVisibility', { showCard });
+  }
+
+  onCardVisibilityChange(callback: (data: { showCard: boolean }) => void): void {
+    this.socket.on('cardVisibility', callback);
+  }
+
   getVotes(): Observable<any> {
     return new Observable(observer => {
       this.socket.on('getVotes', (votes) => {

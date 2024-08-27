@@ -38,7 +38,9 @@ export class GameComponent implements OnInit {
 
     this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
 
-    
+    this.socketService.onCardVisibilityChange((data: { showCard: boolean }) => {
+      this.showCards = data.showCard;
+    });
   }
 
   ngDoCheck(): void {
@@ -70,6 +72,14 @@ export class GameComponent implements OnInit {
     }
   }
 
+  onShowCards() {
+    if(this.registeredPlayer.isAdmin) {
+      this.showCards = !this.showCards;
+    this.socketService.broadcastCardVisibility(this.showCards);
+    } else {
+      this.toastService.showToast("No puedes hacer esto", 3000)
+    }
+  }
 
   checkVote(playerNickName: string): boolean {
     return this.votes.some(item => item.player.nickname == playerNickName)
