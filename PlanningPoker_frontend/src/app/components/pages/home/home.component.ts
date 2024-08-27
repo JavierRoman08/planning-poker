@@ -14,7 +14,6 @@ export class HomeComponent {
   gameName: string = "";
   gameId: string = "";
   errorMessage: string | null = null;
-  isAdmin: boolean = false;
   registeredPlayer: Player = new Player();
 
   constructor(private socketService: SocketService, private router: Router) {}
@@ -24,7 +23,6 @@ export class HomeComponent {
     if (validation.isValid) {
       this.socketService.createRoom(this.gameName).then((data) => {
         this.gameId = data.gameId;
-        this.isAdmin = true;
         this.router.navigate([`/game`, data.gameId]);
       });
     } else {

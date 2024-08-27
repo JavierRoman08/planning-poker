@@ -91,13 +91,20 @@
     font-weight: 400;
 }
 
-.cards {
+.cards, .count {
     display: flex;
     flex-direction: column;
     color: white !important;
-    text-align: center;
+    text-align: center !important;
     margin-top: 30px !important;
     gap: 20px;
+}
+
+.count__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
 .cards__list {
@@ -118,4 +125,18 @@
   
   .ellipse-item {
     position: absolute;
+  }
+
+
+  .reveal__button {
+    position: absolute !important;
+    margin: auto !important;
+    border-radius: 50px;
+    border: none;
+    background-color: #6429CD !important;
+    padding: 10px 20px !important;
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    cursor: pointer;
   }

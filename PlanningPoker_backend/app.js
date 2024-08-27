@@ -23,6 +23,7 @@ const games = {};
 io.on("connection", (socket) => {
   console.log("a user connected");
 
+
   // Crear nueva sala
   socket.on("createRoom", (data) => {
 
@@ -37,9 +38,9 @@ io.on("connection", (socket) => {
       name: data.gameName,
       votes: [],
       players: [],
+      cards: generateCardPool(),
+      adminID: socket.id
     };
-
-    socket.join(gameId); 
     
     socket.emit("gameCreated", { gameId, gameName: games[gameId].name });
 
@@ -50,32 +51,44 @@ io.on("connection", (socket) => {
     const game = games[gameId]
 
     if (game) {
+      const isAdmin = socket.id === game.adminID;
 
-      const player = { nickname: data.nickname, role: data.role, isAdmin: data.isAdmin };
+      const player = { nickname: data.nickname, role: data.role, isAdmin: isAdmin };
       game.players.push(player);
       
+      console.log(player)
+
       socket.join(gameId);
 
-      console.log(`${player.nickname} joined game: ${game.name}`);
-      io.to(gameId).emit("joinedRoom", {players: game.players});
+      socket.emit("getCardPool", { cards: game.cards });
+      socket.emit("getPlayerInfo", {player})
+      io.to(gameId).emit("getVotes", {votes: game.votes})
+
+      io.to(gameId).emit("joinedRoom", {players: game.players, alert: `${player.nickname} has joined`, player});
 
     } else {
       socket.emit("error", { message: "Game not found" });
     }
   })
 
-  socket.on("selectCard", (gameId, player) => {
+  socket.on("selectCard", (gameId, player, voteValue) => {
     const game = games[gameId]
 
-    console.log(player)
+    game.votes.push({player, voteValue})
 
     if(game) {
-      io.to(gameId).emit("selectedCard", {message: `${player.nickname} has choosen a card`})
+      io.to(gameId).emit("selectedCard", {message: `${player.nickname} has choosen a card`, votes: game.votes})
     } else {
       socket.emit("error", { message: "An error has ocurred" });
     }
 
   })
+
+  socket.on('cardVisibility', (data) => {
+    console.log('Card visibility data received:', data);
+    // Emitir el estado de la visibilidad a todos los clientes en la sala
+    io.emit('cardVisibility', data);
+  });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -85,3 +98,15 @@ io.on("connection", (socket) => {
 server.listen(3000, () => {
   console.log("listening on *:3000");
 });
+
+const generateCardPool = () => {
+  const numbers = [];
+  while (numbers.length < 8) {
+    const randomNumber = Math.floor(Math.random() * 16); // Genera un número aleatorio entre 0 y 15
+    if (!numbers.includes(randomNumber)) {
+      numbers.push(randomNumber); // Añade el número si no está en el array
+    }
+  }
+
+  return numbers;
+}

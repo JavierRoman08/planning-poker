@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class LabelComponent {
   @Input() labelFor: string = "";
-  @Input() labelText: string = "";
+  @Input() labelText: any = "";
 }

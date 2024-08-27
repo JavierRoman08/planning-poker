@@ -6,9 +6,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TableComponent } from './components/table/table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './components/atoms/input/input.component';
-import { RadioComponent } from './components/atoms/radio/radio.component';
-import { FieldComponent } from './components/molecules/field/field.component';
-import { PlayerFormComponent } from './components/organisms/player-form/player-form.component';
 import { GameFormComponent } from './components/organisms/game-form/game-form.component';
 import { ButtonComponent } from './components/atoms/button/button.component';
 import { ErrorComponent } from './components/atoms/error/error.component';
@@ -28,9 +25,6 @@ import { ToastComponent } from './components/atoms/toast/toast.component';
     TableComponent,
     LabelComponent,
     InputComponent,
-    RadioComponent,
-    FieldComponent,
-    PlayerFormComponent,
     GameFormComponent,
     ErrorComponent,
     CardComponent,

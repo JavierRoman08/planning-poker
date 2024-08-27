@@ -1,7 +1,4 @@
-<app-navbar
-  [gameId]="gameId"
-  [playerName]="registeredPlayer.nickname"
->
+<app-navbar [gameId]="gameId" [playerName]="registeredPlayer.nickname">
 </app-navbar>
 <app-toast></app-toast>
 <form
@@ -50,26 +47,38 @@
   </app-button>
 </form>
 <div *ngIf="gameId && isNewPlayer" class="gameContainer">
+  
   <div class="ellipse-container">
     <app-table />
-    <app-player-card
-      *ngFor="let player of playerList; let i = index"
-      class="ellipse-item"
-      [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
-      [playerName]="player.nickname"
-    >
-    </app-player-card>
+    
+    <div *ngFor="let player of playerList; let i = index">
+      <app-card
+        *ngIf="checkVote(player.nickname)"
+        [value]="showCards ? getVoteValue(player.nickname) : undefined"
+        [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
+        class="ellipse-item"
+      />
+      <app-avatar
+        *ngIf="!checkVote(player.nickname)"
+        [playerName]="player.nickname"
+        [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
+        class="ellipse-item"
+      />
+    </div>
   </div>
-  <div class="cards">
+  <div class="cards" >
     <h1>Elige una Carta 👇</h1>
     <div class="cards__list row">
-      <app-card
+      <div *ngIf="!showCards" class="row">
+        <app-card
         *ngFor="let value of cards"
         [value]="value"
-        (clickEvent)="handleClick($event)"
+        (clickEvent)="selectCard($event)"
         [isSelected]="value == selectedCardValue"
         [playerType]="registeredPlayer.role"
       ></app-card>
+      </div>
     </div>
   </div>
+  
 </div>

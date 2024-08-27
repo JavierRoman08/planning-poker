@@ -20,8 +20,19 @@ export class SocketService {
     });
   }
 
-  joinRoom(roomId: string, playerInfo: any){
+  getCardPool(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('getCardPool', (cards) => {
+        observer.next(cards);
+      });
+    });
+  }
+
+  joinRoom(roomId: string, playerInfo: any): Promise<any> {
     this.socket.emit('joinRoom', roomId, playerInfo);
+    return new Promise((resolve, reject) => {
+      this.socket.once('getPlayerInfo', (data: any) => resolve(data))
+    })
   }
 
   onPlayerJoin(): Observable<any> {
@@ -32,11 +43,19 @@ export class SocketService {
     });
   }
 
-  onSelectCard(gameId: string, player: any): Observable<any> { 
-    this.socket.emit("selectCard", gameId, player)
+  onSelectCard(gameId: string, player: any, voteValue: any): Observable<any> { 
+    this.socket.emit("selectCard", gameId, player, voteValue)
     return new Observable((observer) => {
       this.socket.on('selectedCard', (data) => {
         observer.next(data);
+      });
+    });
+  }
+
+  getVotes(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('getVotes', (votes) => {
+        observer.next(votes);
       });
     });
   }

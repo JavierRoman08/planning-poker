@@ -15,23 +15,30 @@ export class GameComponent implements OnInit {
   gameId: string = "";
   player: Player = new Player();
   playerList: Player[] = [];
-  cards: number[] = [3, 5, 10, 30, 21, 7]
+  cards: number[] = [];
+  votes: any[] = [];
   isNewPlayer: boolean = false;
-  isAdmin: boolean = false;
   errorPlayerMessage: string | null = null;
   registeredPlayer: Player = new Player();
   selectedCardValue: number | undefined;
   positions: { top: string, left: string }[] = [];
+  showCards: boolean = false;
 
-  constructor(private route: ActivatedRoute, private socket: SocketService, private toastService: ToastService) {}
+  constructor(private route: ActivatedRoute, private socketService: SocketService, private toastService: ToastService) {}
 
   ngOnInit(): void {
-    this.gameId = this.route.snapshot.paramMap.get('gameId') ?? "";
-    this.socket.onPlayerJoin().subscribe(data => {
+    this.gameId = this.route.snapshot.paramMap.get('gameId') ?? ""; 
+
+    this.socketService.onPlayerJoin().subscribe(data => {
       this.playerList = data.players
+      this.toastService.showToast(data.alert, 3000)
     })
 
-    this.generateCardValues()
+    this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
+
+    this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
+
+    
   }
 
   ngDoCheck(): void {
@@ -41,24 +48,51 @@ export class GameComponent implements OnInit {
   createPlayer(form?: NgForm) {
     const validation = validateGameName(form?.value.nickname);
     if (validation.isValid) {
-        const newPlayer = {...form?.value, isAdmin: this.isAdmin}
+        const player = form?.value
         this.isNewPlayer = true;
-        this.registeredPlayer = newPlayer
-        this.socket.joinRoom(this.gameId, newPlayer)
-        
+        this.socketService.joinRoom(this.gameId, player).then(data => {
+          this.registeredPlayer = data.player
+        })
     } else {
       this.errorPlayerMessage = validation.errorMessage
     }
-
-    this.player = new Player()
   }
 
-  handleClick(value: number) {
-    this.selectedCardValue = value
+  selectCard(value: number) {
+    if(this.selectedCardValue) {
+      this.toastService.showToast("No puedes cambiar de carta", 3000)
+    } else {
+      this.selectedCardValue = value
+      this.socketService.onSelectCard(this.gameId, this.registeredPlayer, this.selectedCardValue).subscribe(data => {
+        this.votes = data.votes
+        this.toastService.showToast(data.message, 3000);
+      })
+    }
+  }
 
-    this.socket.onSelectCard(this.gameId, this.registeredPlayer).subscribe(data => {
-      this.toastService.showToast(data.message, 3000);
-    })
+
+  checkVote(playerNickName: string): boolean {
+    return this.votes.some(item => item.player.nickname == playerNickName)
+  }
+
+  getVoteValue(playerNickName: string): number | undefined {
+    const vote = this.votes.find(vote => vote.player.nickname === playerNickName).voteValue
+    return vote;
+  }
+
+  countVotes() {
+    const voteCounts: { [key: number]: number } = {};
+
+    this.votes.forEach(vote => {
+      const value = vote.voteValue;
+      if (voteCounts[value]) {
+        voteCounts[value]++;
+      } else {
+        voteCounts[value] = 1;
+      }
+    });
+
+    return voteCounts;
   }
 
   calculatePositions(): void {
@@ -74,17 +108,5 @@ export class GameComponent implements OnInit {
       const left = centerX + (ellipseWidth / 2) * Math.cos(angle) - 25;
       return { top: `${top}px`, left: `${left}px` };
     });
-  }
-
-  generateCardValues(): void {
-    const numbers: number[] = [];
-    while (numbers.length < 8) {
-      const randomNumber = Math.floor(Math.random() * 16); // Genera un número aleatorio entre 0 y 15
-      if (!numbers.includes(randomNumber)) {
-        numbers.push(randomNumber); // Añade el número si no está en el array
-      }
-    }
-
-    this.cards = numbers;
   }
 }
