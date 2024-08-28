@@ -47,10 +47,15 @@
   </app-button>
 </form>
 <div *ngIf="gameId && isNewPlayer" class="gameContainer">
-  
   <div class="ellipse-container">
     <app-table />
-    <button (click)="onShowCards()" class="reveal__button">Revelar cartas</button>
+    <button
+      *ngIf="registeredPlayer.isAdmin"
+      (click)="showCards ? startNewGame() : onShowCards()"
+      class="reveal__button"
+    >
+      {{ showCards ? "Nueva Votacion" : "Revelar cartas" }}
+    </button>
     <div *ngFor="let player of playerList; let i = index">
       <app-card
         *ngIf="checkVote(player.nickname)"
@@ -71,12 +76,12 @@
     <div class="cards__list row">
       <div *ngIf="!showCards" class="row">
         <app-card
-        *ngFor="let value of cards"
-        [value]="value"
-        (clickEvent)="selectCard($event)"
-        [isSelected]="value == selectedCardValue"
-        [playerType]="registeredPlayer.role"
-      ></app-card>
+          *ngFor="let value of cards"
+          [value]="value"
+          (clickEvent)="selectCard($event)"
+          [isSelected]="value == selectedCardValue"
+          [playerType]="registeredPlayer.role"
+        ></app-card>
       </div>
     </div>
   </div>
@@ -86,12 +91,14 @@
       <div class="row cards__list">
         <div class="count__list" *ngFor="let item of votes">
           <app-card [value]="item.voteValue"></app-card>
-          <span class="font-color" style="text-align: center;">{{ countVotes()[item.voteValue] || 0 }} voto(s)</span>
+          <span class="font-color" style="text-align: center"
+            >{{ countVotes()[item.voteValue] || 0 }} voto(s)</span
+          >
         </div>
       </div>
       <div class="count__list">
-        <app-label [labelText]="'Puntaje'"/>
-        <span class="average">{{average}}</span>
+        <app-label [labelText]="'Puntaje'" />
+        <span class="average">{{ average }}</span>
       </div>
     </div>
   </div>

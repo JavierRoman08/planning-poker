@@ -47,6 +47,15 @@ io.on("connection", (socket) => {
     console.log(`Game created: ${data.gameName} with ID ${gameId}`);
   });
 
+  socket.on("resetGame", (gameId) => {
+    const game = games[gameId]
+
+    game.cards = generateCardPool()
+    game.votes = []
+
+    io.to(gameId).emit("gameReseted", {cards: game.cards, votes: game.votes})
+  })
+
   socket.on("joinRoom", (gameId, data) => {
     const game = games[gameId]
 
