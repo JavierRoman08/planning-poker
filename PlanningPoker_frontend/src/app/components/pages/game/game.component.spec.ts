@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameComponent } from './game.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
-import { NavbarComponent } from '@/components/navbar/navbar.component';
+import { NavbarComponent } from '@/components/molecules/navbar/navbar.component';
 import { AvatarComponent } from '@/components/atoms/avatar/avatar.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from '@/components/atoms/error/error.component';
@@ -51,4 +51,10 @@ describe('GameComponent', () => {
     component.onShowCards();
     expect(toastService.showToast).toHaveBeenCalledWith('No puedes hacer esto', 3000);
   });
+
+  it('si el usurio hace click en invitar jugadores, se muestra la modal', () => {
+    component.showInviteModal = false;
+    component.onShowModal();
+    expect(component.showInviteModal).toBe(true)
+  })
 });
