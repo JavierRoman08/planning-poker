@@ -55,6 +55,7 @@
       <app-card
         *ngIf="checkVote(player.nickname)"
         [value]="showCards ? getVoteValue(player.nickname) : undefined"
+        [isSelected]="!showCards"
         [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
         class="ellipse-item"
       />
