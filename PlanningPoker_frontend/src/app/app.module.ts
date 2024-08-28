@@ -22,7 +22,6 @@ import { HomeComponent } from './components/pages/home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     ButtonComponent,
     TableComponent,
     LabelComponent,
@@ -34,6 +33,7 @@ import { HomeComponent } from './components/pages/home/home.component';
     ErrorComponent,
     CardComponent,
     AvatarComponent,
+    NavbarComponent,
     GameComponent,
     HomeComponent
   ],
