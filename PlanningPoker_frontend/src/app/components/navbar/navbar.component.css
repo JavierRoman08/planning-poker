@@ -21,7 +21,10 @@
 }
 
 .navbar__title {
+    width: 100% !important;
+    position: absolute;
     text-align: center;
+    z-index: 1;
 }
 
 .navbar__invite {
@@ -32,4 +35,8 @@
     cursor: pointer;
     font-weight: bold;
     z-index: 5;
+
+    @media (max-width: 596px) {
+        display: none !important;
+    }
 }

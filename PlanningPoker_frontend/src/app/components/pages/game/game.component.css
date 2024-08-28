@@ -1,27 +1,17 @@
-.main {
-    width: 100% !important;
-    height: 100vh;
-    background: radial-gradient(#330072 0%, #1F0D3F 60%);
-    display: flex !important;
-    flex-direction: column !important;
-}
-
 .gameContainer {
     height: 100%;
     display: flex;
+    margin-top: 50px !important;
     justify-content: center !important;
     flex-direction: column;
 }
 
 .form {
-    position: absolute;
     width: 100%;
     max-width: 400px;
     display: flex;
+    margin: auto !important;
     flex-direction: column;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     gap: 20px;
 }
 
@@ -96,7 +86,7 @@
     flex-direction: column;
     color: white !important;
     text-align: center !important;
-    margin-top: 30px !important;
+    margin-top: 80px !important;
     gap: 20px;
 }
 
@@ -121,14 +111,14 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-  }
+}
   
-  .ellipse-item {
+.ellipse-item {
     position: absolute;
-  }
+}
 
 
-  .reveal__button {
+.reveal__button {
     position: absolute !important;
     margin: auto !important;
     border-radius: 50px;
@@ -139,4 +129,9 @@
     font-size: 16px !important;
     font-weight: bold;
     cursor: pointer;
-  }
+}
+
+.blurred {
+    filter: blur(5px); /* Ajusta el nivel de desenfoque según sea necesario */
+    pointer-events: none; 
+}

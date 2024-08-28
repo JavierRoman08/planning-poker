@@ -64,7 +64,7 @@ io.on("connection", (socket) => {
       socket.emit("getPlayerInfo", {player})
       io.to(gameId).emit("getVotes", {votes: game.votes})
 
-      io.to(gameId).emit("joinedRoom", {players: game.players, alert: `${player.nickname} has joined`, player});
+      io.to(gameId).emit("joinedRoom", {gameName: game.name, players: game.players, alert: `${player.nickname} has joined`, player});
 
     } else {
       socket.emit("error", { message: "Game not found" });

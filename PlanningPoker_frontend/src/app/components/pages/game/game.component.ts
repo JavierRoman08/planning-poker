@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameComponent implements OnInit {
   gameId: string = "";
+  gameName: string = "";
   player: Player = new Player();
   playerList: Player[] = [];
   cards: number[] = [];
@@ -23,6 +24,7 @@ export class GameComponent implements OnInit {
   selectedCardValue: number | undefined;
   positions: { top: string, left: string }[] = [];
   showCards: boolean = false;
+  showInviteModal: boolean = false;
 
   constructor(private route: ActivatedRoute, private socketService: SocketService, private toastService: ToastService) {}
 
@@ -32,6 +34,7 @@ export class GameComponent implements OnInit {
     this.socketService.onPlayerJoin().subscribe(data => {
       this.playerList = data.players
       this.toastService.showToast(data.alert, 3000)
+      this.gameName = data.gameName
     })
 
     this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
@@ -58,6 +61,7 @@ export class GameComponent implements OnInit {
     } else {
       this.errorPlayerMessage = validation.errorMessage
     }
+
   }
 
   selectCard(value: number) {
@@ -88,6 +92,10 @@ export class GameComponent implements OnInit {
   getVoteValue(playerNickName: string): number | undefined {
     const vote = this.votes.find(vote => vote.player.nickname === playerNickName).voteValue
     return vote;
+  }
+
+  onShowModal(){
+    this.showInviteModal = !this.showInviteModal
   }
 
   countVotes() {

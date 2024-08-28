@@ -16,6 +16,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LabelComponent } from './components/atoms/label/label.component';
 import { PlayerCardComponent } from './components/molecules/player-card/player-card.component';
 import { ToastComponent } from './components/atoms/toast/toast.component';
+import { ModalComponent } from './components/molecules/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ToastComponent } from './components/atoms/toast/toast.component';
     GameComponent,
     HomeComponent,
     PlayerCardComponent,
-    ToastComponent
+    ToastComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

@@ -3,9 +3,9 @@
         <img src="assets/logo-poker.png" alt="" class="navbar__image">
         <p class="font-color" *ngIf="!gameId">Crear partida</p>
     </div>
-    <h1 class="navbar__title font-color" *ngIf="gameId"> {{gameName}} </h1>
+    <h1 class="navbar__title font-color"> {{gameName}} </h1>
     <div class="row">
         <app-avatar [playerName]="playerName"></app-avatar>
-        <button class="navbar__invite font-color" *ngIf="gameId">Invitar Jugadores</button>
+        <button class="navbar__invite font-color" *ngIf="gameId && gameName" (click)="onClick()">Invitar Jugadores</button>
     </div>
 </div>

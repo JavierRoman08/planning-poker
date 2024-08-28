@@ -1,0 +1,10 @@
+<div class="modal">
+    <div class="title">
+        <app-label [labelText]="'Invitar Jugadores'" />
+        <button class="close__button" (click)="onClick()">X</button>
+    </div>
+    <div class="url">
+        {{url}}
+    </div>
+    <app-button [text]="'Copiar link'" (buttonClick)="shareLink()" />
+</div>
