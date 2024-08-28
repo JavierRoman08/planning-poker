@@ -25,6 +25,7 @@ export class GameComponent implements OnInit {
   positions: { top: string, left: string }[] = [];
   showCards: boolean = false;
   showInviteModal: boolean = false;
+  average: number = 0;
 
   constructor(private route: ActivatedRoute, private socketService: SocketService, private toastService: ToastService) {}
 
@@ -37,17 +38,35 @@ export class GameComponent implements OnInit {
       this.gameName = data.gameName
     })
 
-    this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
-
-    this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
-
-    this.socketService.onCardVisibilityChange((data: { showCard: boolean }) => {
+    this.socketService.onCardVisibilityChange((data: { showCard: boolean, average: number, cardValue: any }) => {
       this.showCards = data.showCard;
+      this.average = data.average
+      this.selectedCardValue = data.cardValue
     });
+
+    this.socketService.onResetGame().subscribe(data => {
+      this.cards = data.cards
+      this.votes = data.votes
+    })
+
+    this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
+    this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
   }
 
   ngDoCheck(): void {
     this.calculatePositions(); // Recalcular posiciones cada vez que haya cambios en el array
+  }
+
+  startNewGame() {
+    if(this.registeredPlayer.isAdmin) {
+      this.showCards = false
+      this.average = 0
+      this.selectedCardValue = undefined; 
+      this.socketService.resetGame(this.gameId);
+      this.socketService.broadcastCardVisibility(this.showCards, this.average, this.selectedCardValue);
+    } else {
+      this.toastService.showToast("No puedes hacer esto", 3000)
+    }
   }
 
   createPlayer(form?: NgForm) {
@@ -78,8 +97,12 @@ export class GameComponent implements OnInit {
 
   onShowCards() {
     if(this.registeredPlayer.isAdmin) {
+      const votes = this.votes.map(item => item.voteValue);
+      const totalSum = votes.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
       this.showCards = !this.showCards;
-    this.socketService.broadcastCardVisibility(this.showCards);
+      this.average = totalSum / votes.length
+      this.socketService.broadcastCardVisibility(this.showCards, this.average);
     } else {
       this.toastService.showToast("No puedes hacer esto", 3000)
     }

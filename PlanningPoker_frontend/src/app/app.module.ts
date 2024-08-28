@@ -21,7 +21,6 @@ import { ModalComponent } from './components/molecules/modal/modal.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     ButtonComponent,
     TableComponent,
     LabelComponent,
@@ -30,6 +29,7 @@ import { ModalComponent } from './components/molecules/modal/modal.component';
     ErrorComponent,
     CardComponent,
     AvatarComponent,
+    NavbarComponent,
     GameComponent,
     HomeComponent,
     PlayerCardComponent,

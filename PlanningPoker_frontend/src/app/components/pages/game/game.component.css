@@ -105,6 +105,15 @@
     justify-content: center !important;
 }
 
+.selectedCardsList {
+    justify-content: space-evenly !important;
+}
+
+.average {
+    font-size: 30px;
+    font-weight: bold;
+}
+
 .ellipse-container {
     position: relative;
     width: 750px;

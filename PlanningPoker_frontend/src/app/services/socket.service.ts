@@ -52,11 +52,11 @@ export class SocketService {
     });
   }
 
-  broadcastCardVisibility(showCard: boolean): void {
-    this.socket.emit('cardVisibility', { showCard });
+  broadcastCardVisibility(showCard: boolean, average: number, cardValue?: number): void {
+    this.socket.emit('cardVisibility', { showCard, average, cardValue });
   }
 
-  onCardVisibilityChange(callback: (data: { showCard: boolean }) => void): void {
+  onCardVisibilityChange(callback: (data: { showCard: boolean, average: number, cardValue: any }) => void): void {
     this.socket.on('cardVisibility', callback);
   }
 
@@ -64,6 +64,18 @@ export class SocketService {
     return new Observable(observer => {
       this.socket.on('getVotes', (votes) => {
         observer.next(votes);
+      });
+    });
+  }
+
+  resetGame(gameId: string) {
+    this.socket.emit("resetGame", gameId)
+  }
+
+  onResetGame(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('gameReseted', (data) => {
+        observer.next(data);
       });
     });
   }
