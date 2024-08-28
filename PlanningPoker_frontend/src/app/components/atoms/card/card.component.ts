@@ -15,7 +15,6 @@ export class CardComponent {
   constructor(private toastService: ToastService){}
 
   onClickFn() {
-
     if (this.playerType == 'player') {
       this.clickEvent.emit(this.value)
     } else {

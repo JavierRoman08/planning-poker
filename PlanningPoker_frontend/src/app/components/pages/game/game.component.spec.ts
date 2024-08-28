@@ -1,6 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { of } from 'rxjs';
+import { NavbarComponent } from '@/components/navbar/navbar.component';
+import { AvatarComponent } from '@/components/atoms/avatar/avatar.component';
+import { FormsModule } from '@angular/forms';
+import { ErrorComponent } from '@/components/atoms/error/error.component';
+import { ButtonComponent } from '@/components/atoms/button/button.component';
+import { ToastComponent } from '@/components/atoms/toast/toast.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -8,7 +16,17 @@ describe('GameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GameComponent]
+      declarations: [GameComponent, NavbarComponent, AvatarComponent, ErrorComponent, ButtonComponent, ToastComponent],
+      imports: [RouterModule, FormsModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { paramMap: { get: () => 'dddd' } },
+            paramMap: of({ get: () => 'dddd' })
+          }
+        }
+      ]
     })
     .compileComponents();
     

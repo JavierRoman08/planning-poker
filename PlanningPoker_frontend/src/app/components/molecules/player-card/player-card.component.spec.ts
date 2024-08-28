@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlayerCardComponent } from './player-card.component';
+import { AvatarComponent } from '@/components/atoms/avatar/avatar.component';
+import { LabelComponent } from '@/components/atoms/label/label.component';
 
 describe('PlayerCardComponent', () => {
   let component: PlayerCardComponent;
@@ -8,7 +10,7 @@ describe('PlayerCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PlayerCardComponent]
+      declarations: [PlayerCardComponent, AvatarComponent, LabelComponent]
     })
     .compileComponents();
     
