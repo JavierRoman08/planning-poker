@@ -55,7 +55,7 @@
   <div *ngIf="gameId && isNewPlayer" class="gameContainer">
     <div class="ellipse-container">
       <app-table />
-      <button (click)="onShowModal()" class="reveal__button">
+      <button (click)="onShowCards()" class="reveal__button">
         Revelar cartas
       </button>
       <div *ngFor="let player of playerList; let i = index">
