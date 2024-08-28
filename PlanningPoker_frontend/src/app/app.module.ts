@@ -20,7 +20,6 @@ import { ToastComponent } from './components/atoms/toast/toast.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     ButtonComponent,
     TableComponent,
     LabelComponent,
@@ -29,6 +28,7 @@ import { ToastComponent } from './components/atoms/toast/toast.component';
     ErrorComponent,
     CardComponent,
     AvatarComponent,
+    NavbarComponent,
     GameComponent,
     HomeComponent,
     PlayerCardComponent,
