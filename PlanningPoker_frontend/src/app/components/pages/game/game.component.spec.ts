@@ -51,4 +51,11 @@ describe('GameComponent', () => {
     component.onShowCards();
     expect(toastService.showToast).toHaveBeenCalledWith('No puedes hacer esto', 3000);
   });
+
+  it('si el usuario es admin puede reiniciar la partida', () => {
+    component.registeredPlayer.isAdmin = true;
+    component.average = 30;
+    component.startNewGame();
+    expect(component.average).toBe(0);
+  });
 });
