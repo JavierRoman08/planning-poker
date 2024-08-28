@@ -23,6 +23,7 @@ export class GameComponent implements OnInit {
   selectedCardValue: number | undefined;
   positions: { top: string, left: string }[] = [];
   showCards: boolean = false;
+  average: number = 0;
 
   constructor(private route: ActivatedRoute, private socketService: SocketService, private toastService: ToastService) {}
 
@@ -38,8 +39,9 @@ export class GameComponent implements OnInit {
 
     this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
 
-    this.socketService.onCardVisibilityChange((data: { showCard: boolean }) => {
+    this.socketService.onCardVisibilityChange((data: { showCard: boolean, average: number }) => {
       this.showCards = data.showCard;
+      this.average = data.average
     });
   }
 
@@ -73,9 +75,14 @@ export class GameComponent implements OnInit {
   }
 
   onShowCards() {
+    const votes = this.votes.map(item => item.voteValue);
+    const totalSum = votes.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    
+
     if(this.registeredPlayer.isAdmin) {
       this.showCards = !this.showCards;
-    this.socketService.broadcastCardVisibility(this.showCards);
+      this.average = totalSum / votes.length
+      this.socketService.broadcastCardVisibility(this.showCards, this.average);
     } else {
       this.toastService.showToast("No puedes hacer esto", 3000)
     }

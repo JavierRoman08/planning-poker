@@ -80,11 +80,19 @@
       </div>
     </div>
   </div>
-  <div *ngIf="showCards" class="row count">
+  <div *ngIf="showCards" class="cards">
     <h1>Votos</h1>
-    <div class="count__list" *ngFor="let item of votes">
-      <app-card [value]="item.voteValue"></app-card>
-      <span class="font-color" style="text-align: center;">{{ countVotes()[item.voteValue] || 0 }} voto(s)</span>
+    <div class="row cards__list selectedCardsList">
+      <div class="row cards__list">
+        <div class="count__list" *ngFor="let item of votes">
+          <app-card [value]="item.voteValue"></app-card>
+          <span class="font-color" style="text-align: center;">{{ countVotes()[item.voteValue] || 0 }} voto(s)</span>
+        </div>
+      </div>
+      <div class="count__list">
+        <app-label [labelText]="'Puntaje'"/>
+        <span class="average">{{average}}</span>
+      </div>
     </div>
   </div>
 </div>

@@ -52,11 +52,11 @@ export class SocketService {
     });
   }
 
-  broadcastCardVisibility(showCard: boolean): void {
-    this.socket.emit('cardVisibility', { showCard });
+  broadcastCardVisibility(showCard: boolean, average: number): void {
+    this.socket.emit('cardVisibility', { showCard, average });
   }
 
-  onCardVisibilityChange(callback: (data: { showCard: boolean }) => void): void {
+  onCardVisibilityChange(callback: (data: { showCard: boolean, average: number }) => void): void {
     this.socket.on('cardVisibility', callback);
   }
 
