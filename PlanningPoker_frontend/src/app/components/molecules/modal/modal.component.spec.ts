@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalComponent } from './modal.component';
+import { LabelComponent } from '@/components/atoms/label/label.component';
+import { ButtonComponent } from '@/components/atoms/button/button.component';
 
 describe('ModalComponent', () => {
   let component: ModalComponent;
@@ -8,7 +10,7 @@ describe('ModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalComponent]
+      declarations: [ModalComponent, LabelComponent, ButtonComponent]
     })
     .compileComponents();
     
