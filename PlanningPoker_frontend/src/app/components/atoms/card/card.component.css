@@ -12,7 +12,7 @@
 }
 
 .card__selected {
-    background: #E4A4FF !important;
+    background: #BB65FF !important;
     color: #6429CD;
     transition: 0.5s;
 }

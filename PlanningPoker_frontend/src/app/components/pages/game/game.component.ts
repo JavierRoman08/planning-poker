@@ -54,6 +54,10 @@ export class GameComponent implements OnInit {
         this.toastService.showToast(data.message, 3000);
     })
 
+    this.socketService.onRoleChanged().subscribe(data => {
+      this.toastService.showToast(`${data.player.nickname} has changed role to ${data.player.role}`)
+    })
+
     this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
     this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
   }
@@ -119,6 +123,17 @@ export class GameComponent implements OnInit {
     return vote;
   }
 
+  changeRole(){
+    
+    if(this.registeredPlayer.role == "player"){
+      this.registeredPlayer.role = "spectator";
+    } else if(this.registeredPlayer.role == "spectator"){
+      this.registeredPlayer.role = "player";
+    }
+
+    this.socketService.changeRole(this.gameId, this.registeredPlayer.role)
+  }
+
   onShowModal(){
     this.showInviteModal = !this.showInviteModal
   }
@@ -137,8 +152,8 @@ export class GameComponent implements OnInit {
   }
 
   calculatePositions(): void {
-    const ellipseWidth = 750; // Ancho del eje mayor (horizontal)
-    const ellipseHeight = 550; // Altura del eje menor (vertical)
+    const ellipseWidth = 770; // Ancho del eje mayor (horizontal)
+    const ellipseHeight = 570; // Altura del eje menor (vertical)
     const centerX = ellipseWidth / 2;
     const centerY = ellipseHeight / 2;
     const angleStep = (2 * Math.PI) / this.playerList.length;

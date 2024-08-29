@@ -116,8 +116,8 @@
 
 .ellipse-container {
     position: relative;
-    width: 750px;
-    height: 550px;
+    width: 770px;
+    height: 570px;
     margin: auto !important;
     border-radius: 250px;
     display: flex !important;
@@ -129,8 +129,7 @@
     position: absolute;
 }
 
-
-.reveal__button {
+.reveal__button, .change__role {
     position: absolute !important;
     margin: auto !important;
     border-radius: 50px;
@@ -141,6 +140,11 @@
     font-size: 16px !important;
     font-weight: bold;
     cursor: pointer;
+}
+
+.change__role {
+    top: 120px !important;
+    right: 50px !important;
 }
 
 .blurred {

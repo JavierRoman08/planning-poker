@@ -62,10 +62,8 @@ io.on("connection", (socket) => {
     if (game) {
       const isAdmin = socket.id === game.adminID;
 
-      const player = { nickname: data.nickname, role: data.role, isAdmin: isAdmin };
+      const player = { playerId: socket.id, nickname: data.nickname, role: data.role, isAdmin: isAdmin };
       game.players.push(player);
-      
-      console.log(player)
 
       socket.join(gameId);
 
@@ -92,6 +90,17 @@ io.on("connection", (socket) => {
     }
 
   })
+
+  socket.on('changeRole', (gameId, playerRole) => {
+    const game = games[gameId];
+    if (game) {
+      const player = game.players.find((p) => p.playerId === socket.id);
+      if (player) {
+        player.role = playerRole 
+      }
+      io.to(gameId).emit('roleChanged', { player });
+    }
+  });
 
   socket.on('cardVisibility', (data) => {
     console.log('Card visibility data received:', data);

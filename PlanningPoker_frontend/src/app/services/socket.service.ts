@@ -55,6 +55,17 @@ export class SocketService {
     });
   }
 
+  changeRole(gameId: string, player: any){
+    this.socket.emit('changeRole', gameId, player)
+  }
+
+  onRoleChanged(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('roleChanged', (data) => {
+        observer.next(data);
+      });
+    });
+  }
 
   broadcastCardVisibility(showCard: boolean, average: number, cardValue?: number): void {
     this.socket.emit('cardVisibility', { showCard, average, cardValue });
