@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="cards" *ngIf="!showCards">
+    <div class="cards" *ngIf="!showCards && registeredPlayer.role == 'player'">
       <h1>Elige una Carta 👇</h1>
       <div class="cards__list row">
         <div *ngIf="!showCards" class="row">

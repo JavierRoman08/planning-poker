@@ -65,4 +65,17 @@ describe('GameComponent', () => {
     expect(component.showInviteModal).toBe(true)
   })
 
+  it('si el usuario tipo "player" hace click en cambiar rol, pasa a ser "spectator"', () => {
+    component.registeredPlayer.role = "player"
+    component.changeRole()
+    expect(component.registeredPlayer.role).toBe("spectator")
+
+  })
+
+  it('debe mostrar el diseño de espectador cuando el jugador es un espectador', () => {
+    component.registeredPlayer.role = 'spectator'; 
+    fixture.detectChanges();
+    const cardList = fixture.nativeElement.querySelector('.cards');
+    expect(cardList).toBeFalsy();
+  });
 });
