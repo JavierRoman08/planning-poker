@@ -43,14 +43,18 @@ export class SocketService {
     });
   }
 
-  onSelectCard(gameId: string, player: any, voteValue: any): Observable<any> { 
+  selectCard(gameId: string, player: any, voteValue: any) { 
     this.socket.emit("selectCard", gameId, player, voteValue)
+  }
+
+  onSelectCard(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('selectedCard', (data) => {
         observer.next(data);
       });
     });
   }
+
 
   broadcastCardVisibility(showCard: boolean, average: number, cardValue?: number): void {
     this.socket.emit('cardVisibility', { showCard, average, cardValue });

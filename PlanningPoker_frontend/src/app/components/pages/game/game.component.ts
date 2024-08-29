@@ -49,6 +49,11 @@ export class GameComponent implements OnInit {
       this.votes = data.votes
     })
 
+    this.socketService.onSelectCard().subscribe(data => {
+        this.votes = data.votes
+        this.toastService.showToast(data.message, 3000);
+    })
+
     this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
     this.socketService.getVotes().subscribe(data => {this.votes = data.votes})
   }
@@ -88,10 +93,7 @@ export class GameComponent implements OnInit {
       this.toastService.showToast("No puedes cambiar de carta", 3000)
     } else {
       this.selectedCardValue = value
-      this.socketService.onSelectCard(this.gameId, this.registeredPlayer, this.selectedCardValue).subscribe(data => {
-        this.votes = data.votes
-        this.toastService.showToast(data.message, 3000);
-      })
+      this.socketService.selectCard(this.gameId, this.registeredPlayer, this.selectedCardValue)
     }
   }
 
