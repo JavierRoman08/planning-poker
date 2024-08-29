@@ -124,18 +124,18 @@ export class GameComponent implements OnInit {
   }
 
   countVotes() {
-    const voteCounts: { [key: number]: number } = {};
+    const conteo = this.votes.reduce((acc, obj) => {
+      acc[obj.voteValue] = (acc[obj.voteValue] || 0) + 1;
+      return acc;
+    }, {} as { [key: number]: number });
 
-    this.votes.forEach(vote => {
-      const value = vote.voteValue;
-      if (voteCounts[value]) {
-        voteCounts[value]++;
-      } else {
-        voteCounts[value] = 1;
-      }
+    const resultado = Object.keys(conteo).map(key => {
+      return { numberValue: parseInt(key), count: conteo[key] };
     });
 
-    return voteCounts;
+    console.log(resultado)
+
+    return resultado;
   }
 
   calculatePositions(): void {
