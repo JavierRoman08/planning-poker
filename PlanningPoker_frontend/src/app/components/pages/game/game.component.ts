@@ -133,8 +133,6 @@ export class GameComponent implements OnInit {
       return { numberValue: parseInt(key), count: conteo[key] };
     });
 
-    console.log(resultado)
-
     return resultado;
   }
 
