@@ -94,4 +94,16 @@ export class SocketService {
       });
     });
   }
+
+  selectAdmin(gameId: string, newAdmin: any){
+    this.socket.emit("selectAdmin", gameId, newAdmin)
+  }
+
+  onChangedAdmin(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('adminSelected', (data) => {
+        observer.next(data)
+      })
+    })
+  }
 }

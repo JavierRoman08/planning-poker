@@ -102,6 +102,17 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on('selectAdmin', (gameId, newAdmin) => {
+    const game = games[gameId];
+    if (game) {
+      const player = game.players.find((p) => p.playerId === newAdmin.playerId);
+      if (player) {
+        player.isAdmin = true 
+      }
+      io.to(gameId).emit('adminSelected', { player, players: game.players });
+    }
+  });
+
   socket.on('cardVisibility', (data) => {
     console.log('Card visibility data received:', data);
     // Emitir el estado de la visibilidad a todos los clientes en la sala

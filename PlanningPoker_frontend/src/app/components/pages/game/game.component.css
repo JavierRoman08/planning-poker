@@ -129,7 +129,7 @@
     position: absolute;
 }
 
-.reveal__button, .change__role {
+.reveal__button, .change__role, .change__admin {
     position: absolute !important;
     margin: auto !important;
     border-radius: 50px;
@@ -145,6 +145,17 @@
 .change__role {
     top: 120px !important;
     right: 50px !important;
+}
+
+.change__admin {
+    top: 120px !important;
+    left: 50px !important;
+}
+
+.button__change__admin {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
 }
 
 .blurred {

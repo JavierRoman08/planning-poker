@@ -56,6 +56,9 @@
     <button (click)="changeRole()" class="change__role">
       {{ registeredPlayer.role == "player" ? "Cambiar a modo espectador" : "Cambiar a modo jugador" }}
     </button>
+    <button (click)="selectNewAdmin()" class="change__admin" *ngIf="registeredPlayer.isAdmin">
+      Selecciona nuevo administrador
+    </button>
     <div class="ellipse-container">
       <app-table />
       <button *ngIf="registeredPlayer.isAdmin" (click)="showCards ? startNewGame() : onShowCards()" class="reveal__button">
@@ -69,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div class="cards" *ngIf="!showCards && registeredPlayer.role == 'player'">
+    <div class="cards" *ngIf="!showCards && registeredPlayer.role == 'player' && !isChangingAdmin">
       <h1>Elige una Carta 👇</h1>
       <div class="cards__list row">
         <div *ngIf="!showCards" class="row">
@@ -83,7 +86,17 @@
         </div>
       </div>
     </div>
-    <div *ngIf="showCards" class="cards">
+    <div class="cards" *ngIf="isChangingAdmin">
+      <h1>Elige al nuevo administrador 👇</h1>
+      <div class="cards__list row">
+        <div class="row" *ngFor="let player of playerList">
+          <button class="button__change__admin" (click)="makeAdmin(player)">
+            <app-player-card [playerName]="player.nickname" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showCards && !isChangingAdmin" class="cards">
       <h1>Votos</h1>
       <div class="row cards__list selectedCardsList">
         <div class="row cards__list">

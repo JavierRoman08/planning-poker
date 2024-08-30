@@ -26,6 +26,7 @@ export class GameComponent implements OnInit {
   showCards: boolean = false;
   showInviteModal: boolean = false;
   average: number = 0;
+  isChangingAdmin = false;
 
   constructor(private route: ActivatedRoute, private socketService: SocketService, private toastService: ToastService) {}
 
@@ -56,6 +57,15 @@ export class GameComponent implements OnInit {
 
     this.socketService.onRoleChanged().subscribe(data => {
       this.toastService.showToast(`${data.player.nickname} has changed role to ${data.player.role}`)
+    })
+
+    this.socketService.onChangedAdmin().subscribe(data => {
+      this.toastService.showToast(`${data.player.nickname} is now an Admin`, 3000)
+      this.playerList = data.players
+      if(data.player.playerId == this.registeredPlayer.playerId) {
+        this.registeredPlayer = data.player
+        this.toastService.showToast(`You are now an Admin`, 5000)
+      }
     })
 
     this.socketService.getCardPool().subscribe(data => {this.cards = data.cards})
@@ -124,7 +134,6 @@ export class GameComponent implements OnInit {
   }
 
   changeRole(){
-    
     if(this.registeredPlayer.role == "player"){
       this.registeredPlayer.role = "spectator";
     } else if(this.registeredPlayer.role == "spectator"){
@@ -132,6 +141,20 @@ export class GameComponent implements OnInit {
     }
 
     this.socketService.changeRole(this.gameId, this.registeredPlayer.role)
+  }
+
+  selectNewAdmin(){
+    this.isChangingAdmin = !this.isChangingAdmin
+  }
+
+  makeAdmin(player: any){
+    if(player.isAdmin){
+      this.toastService.showToast(`${player.nickname} is already and admin`, 3000)
+    } else {
+      this.socketService.selectAdmin(this.gameId, player)
+    }
+
+    this.isChangingAdmin = !this.isChangingAdmin
   }
 
   onShowModal(){
