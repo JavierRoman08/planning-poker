@@ -16,7 +16,6 @@ export class SocketService {
     return new Promise((resolve, reject) => {
         this.socket.emit('createRoom', { gameName });
         this.socket.once('gameCreated', (data: any) => resolve(data));
-        this.socket.once('error', (data: any) => reject(data));
     });
   }
 

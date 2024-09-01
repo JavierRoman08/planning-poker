@@ -72,7 +72,7 @@ describe('GameComponent', () => {
 
   })
 
-  it('debe mostrar el diseño de espectador cuando el jugador es un espectador', () => {
+  it('se deben ocultar las cartas cuando el jugador es un espectador', () => {
     component.registeredPlayer.role = 'spectator'; 
     fixture.detectChanges();
     const cardList = fixture.nativeElement.querySelector('.cards');

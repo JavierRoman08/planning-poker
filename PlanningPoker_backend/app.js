@@ -23,8 +23,6 @@ const games = {};
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-
-  // Crear nueva sala
   socket.on("createRoom", (data) => {
 
     if (!data.gameName || data.gameName.trim() === '') {
@@ -115,7 +113,6 @@ io.on("connection", (socket) => {
 
   socket.on('cardVisibility', (data) => {
     console.log('Card visibility data received:', data);
-    // Emitir el estado de la visibilidad a todos los clientes en la sala
     io.emit('cardVisibility', data);
   });
 

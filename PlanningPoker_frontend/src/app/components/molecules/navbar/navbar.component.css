@@ -3,10 +3,10 @@
     margin: auto !important;
     justify-content: space-between;
     align-items: center !important;
-    position: relative;
+    position: relative !important;
     top: 0;
     left: 0;
-    padding: 20px 0px !important;
+    padding: 20px !important;
     z-index: 2;
 }
 

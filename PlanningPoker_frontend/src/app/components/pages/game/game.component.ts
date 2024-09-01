@@ -148,12 +148,7 @@ export class GameComponent implements OnInit {
   }
 
   makeAdmin(player: any){
-    if(player.isAdmin){
-      this.toastService.showToast(`${player.nickname} is already and admin`, 3000)
-    } else {
-      this.socketService.selectAdmin(this.gameId, player)
-    }
-
+    this.socketService.selectAdmin(this.gameId, player)
     this.isChangingAdmin = !this.isChangingAdmin
   }
 

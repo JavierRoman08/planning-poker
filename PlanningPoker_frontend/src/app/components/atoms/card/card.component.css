@@ -11,13 +11,13 @@
     background: none !important;
 }
 
-.card__selected {
-    background: #BB65FF !important;
-    color: #6429CD;
-    transition: 0.5s;
-}
+    .card--selected {
+        background: #BB65FF !important;
+        color: #6429CD;
+        transition: 0.5s;
+    }
 
-.card__spectator {
-    background: #BDBDFF !important;
-    color: #330072;
-}
+    .card--spectator {
+        background: #BDBDFF !important;
+        color: #330072;
+    }
