@@ -11,7 +11,7 @@
     #playerForm="ngForm"
     (ngSubmit)="createPlayer(playerForm)"
     class="form player__form"
-    *ngIf="gameId && !isNewPlayer"
+    *ngIf="gameId && !registeredPlayer.playerId"
   >
     <label for="nickname" class="form__label">Tu nombre</label>
     <input
@@ -52,26 +52,27 @@
     >
     </app-button>
   </form>
-  <div *ngIf="gameId && isNewPlayer" class="gameContainer">
-    <button (click)="changeRole()" class="change__role">
-      {{ registeredPlayer.role == "player" ? "Cambiar a modo espectador" : "Cambiar a modo jugador" }}
-    </button>
-    <button (click)="selectNewAdmin()" class="change__admin" *ngIf="registeredPlayer.isAdmin">
-      Asignar administrador
-    </button>
-    <div class="ellipse-container">
-      <app-table />
-      <button *ngIf="registeredPlayer.isAdmin" (click)="showCards ? startNewGame() : onShowCards()" class="reveal__button">
-        {{ showCards ? "Nueva Votacion" : "Revelar cartas" }}
+  <div *ngIf="gameId && registeredPlayer.playerId" class="gameContainer">
+    <div class="row button__options">
+      <button (click)="changeRole()" class="change__role">
+        {{ registeredPlayer.role == "player" ? "Cambiar a modo espectador" : "Cambiar a modo jugador" }}
       </button>
-      <div *ngFor="let player of playerList; let i = index">
-        <div [ngStyle]="{ top: positions[i].top, left: positions[i].left }"
-          class="ellipse-item">
+      <button (click)="selectNewAdmin()" class="change__admin" *ngIf="registeredPlayer.isAdmin">
+        Asignar administrador
+      </button>
+    </div>
+    <div class="table-container">
+      <app-table>
+        <button *ngIf="registeredPlayer.isAdmin" (click)="showCards ? startNewGame() : onShowCards()" class="reveal__button">
+          {{ showCards ? "Nueva Votacion" : "Revelar cartas" }}
+        </button>
+        <div class="player" *ngFor="let player of playerList; let i = index" [ngStyle]="getPlayerPositionStyle(i, playerList.length)">
           <app-card *ngIf="checkVote(player.nickname)" [value]="showCards ? getVoteValue(player.nickname) : undefined" [isSelected]="!showCards" />
           <app-player-card *ngIf="!checkVote(player.nickname)" [playerName]="player.nickname" />
-        </div>
-      </div>
+          </div>
+      </app-table>
     </div>
+
     <div class="cards" *ngIf="!showCards && registeredPlayer.role == 'player' && !isChangingAdmin">
       <h1>Elige una Carta 👇</h1>
       <div class="cards__list row">

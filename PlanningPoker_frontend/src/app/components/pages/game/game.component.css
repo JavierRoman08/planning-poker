@@ -1,7 +1,8 @@
 .gameContainer {
     height: 100%;
     display: flex;
-    margin-top: 50px !important;
+    margin-top: 30px !important;
+    padding-bottom: 30px !important;
     justify-content: center !important;
     flex-direction: column;
 }
@@ -93,17 +94,17 @@
     gap: 20px;
 }
 
-.count__list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-}
+    .count__list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
 
-.cards__list {
-    gap: 20px !important;
-    justify-content: center !important;
-}
+    .cards__list {
+        gap: 20px !important;
+        justify-content: center !important;
+    }
 
 .selectedCardsList {
     justify-content: space-evenly !important;
@@ -114,26 +115,10 @@
     font-weight: bold;
 }
 
-.ellipse-container {
-    position: relative;
-    width: 770px;
-    height: 570px;
-    margin: auto !important;
-    border-radius: 250px;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-  
-.ellipse-item {
-    position: absolute;
-}
-
 .reveal__button, .change__role, .change__admin {
-    position: absolute !important;
-    margin: auto !important;
     border-radius: 50px;
     border: none;
+    margin: auto !important;
     background-color: #6429CD !important;
     padding: 10px 20px !important;
     color: white !important;
@@ -142,23 +127,32 @@
     cursor: pointer;
 }
 
-.change__role {
-    top: 120px !important;
-    right: 50px !important;
-}
+.button__options {
+    justify-content: space-around;
 
-.change__admin {
-    top: 120px !important;
-    left: 50px !important;
-}
-
-.button__change__admin {
-    background: none !important;
-    border: none !important;
-    cursor: pointer;
+    @media (max-width: 596px) {
+        flex-direction: column;
+    }
 }
 
 .blurred {
     filter: blur(5px); /* Ajusta el nivel de desenfoque según sea necesario */
     pointer-events: none; 
 }
+
+.table-container {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px !important;
+}
+  
+    .player {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+    }

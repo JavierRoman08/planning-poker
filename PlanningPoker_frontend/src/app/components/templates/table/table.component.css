@@ -1,3 +1,4 @@
+/* Aplicación de los estilos proporcionados */
 .table-1 {
     position: relative;
     width: 600px;
@@ -8,9 +9,9 @@
     display: flex;
     align-items: center;
     box-shadow: 0px 0px 20px 0px rgba(189, 189, 255, 0.2);
-}
-
-.table-2 {
+  }
+  
+  .table-2 {
     width: 550px;
     height: 300px;
     border-radius: 250px;
@@ -19,14 +20,35 @@
     display: flex;
     align-items: center;
     box-shadow: 0px 0px 10px 0px rgba(189, 189, 255, 0.6);
-}
-
-.table-3 {
+  }
+  
+  .table-3 {
     width: 500px;
     height: 250px;
     border-radius: 250px;
     margin: auto !important;
-    background-color: #1F0D3F99;
-    border: 1px solid #6429CD;
+    background-color: #1f0d3f99;
+    border: 1px solid #6429cd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.06);
-}
+  }
+
+
+  @media (max-width: 768px) {
+    .table-1 {
+      width: 70vw;
+      height: 60vh;
+    }
+  
+    .table-2 {
+      width: 60vw;
+      height: 55vh;
+    }
+  
+    .table-3 {
+      width: 50vw;
+      height: 50vh;
+    }
+  }
