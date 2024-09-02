@@ -19,6 +19,22 @@
     gap: 20px;
 }
 
+    .title {
+        display: flex;
+        justify-content: space-between;
+        background: #6429CD !important;
+        padding: 10px 20px !important;
+        border-radius: 23px 23px 0px 0px;
+    }
+
+    .close__button {
+        color: white !important;
+        font-weight: bold;
+        background: none;
+        border: none;
+        cursor: pointer !important;
+    }
+
 .player__form {
     z-index: 20 !important;
     padding: 50px 5% !important;
@@ -37,7 +53,7 @@
         font-weight: 700;
     }
     
-    .form__input {
+    .form__input, .url {
         background-color: transparent;
         border: 1px solid rgba(187, 101, 255, 1);
         color: white;
@@ -45,6 +61,10 @@
         padding: 10px !important;
         border-radius: 100px;
         font-weight: 400;
+    }
+
+    .url {
+        margin: 0px 20px !important;
     }
     
 
@@ -116,7 +136,7 @@
     font-weight: bold;
 }
 
-.reveal__button, .change__role, .change__admin {
+.reveal__button, .change__role, .change__admin, .change__gamemode {
     border-radius: 50px;
     border: none;
     margin: auto !important;

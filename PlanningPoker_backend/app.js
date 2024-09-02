@@ -36,6 +36,7 @@ io.on("connection", (socket) => {
       name: data.gameName,
       votes: [],
       players: [],
+      gameMode: 'fibonacci',
       cards: generateCardPool(),
       adminID: socket.id
     };
@@ -115,6 +116,20 @@ io.on("connection", (socket) => {
     console.log('Card visibility data received:', data);
     io.emit('cardVisibility', data);
   });
+
+  socket.on('selectGameMode', (gameId, gameMode) => {
+    const game = games[gameId]
+    
+    if(game){
+      game.gameMode = gameMode
+      game.votes = []
+      
+      io.to(gameId).emit('selectedGameMode', {gameMode: game.gameMode})
+    } else {
+      socket.emit("error", { message: "An error has ocurred" });
+    }
+
+  })
 
   socket.on("disconnect", () => {
     console.log('player disconnected', socket.id)

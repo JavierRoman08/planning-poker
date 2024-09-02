@@ -17,7 +17,7 @@ export class GameComponent implements OnInit {
   gameName: string = '';
   player: Player = new Player();
   playerList: Player[] = [];
-  cards: number[] = [0,1,1,2,3,5,8,13,21,34,55,89];
+  cards: number[] = [0,1,2,3,5,8,13,21,34,55,89];
   votes: any[] = [];
   errorPlayerMessage: string | null = null;
   registeredPlayer: Player = new Player();
@@ -27,6 +27,9 @@ export class GameComponent implements OnInit {
   showInviteModal: boolean = false;
   average: number = 0;
   isChangingAdmin = false;
+  url: string = '';
+  changeGameMode: boolean = false;
+  selectedGameMode: string = 'fibonacci'
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +39,7 @@ export class GameComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.url = window.location.href;
     this.registeredPlayer = this.sessionStorageService.getItem('player');
     this.gameName = this.sessionStorageService.getItem('gameName');
 
@@ -90,6 +94,18 @@ export class GameComponent implements OnInit {
     this.socketService.getVotes().subscribe((data) => {
       this.votes = data.votes;
     });
+
+    this.socketService.onChangeGameMode().subscribe((data) => {
+      this.selectedGameMode = data.gameMode
+
+      if(data.gameMode == 'hours'){
+        this.cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        this.votes = []
+        this.selectedCardValue = undefined
+      }
+
+      this.toastService.showToast(`GameMode has changed to: ${data.gameMode}`)
+    })
 
     this.socketService.onUserDisconnect().subscribe((data) => {
       this.playerList = data.players; // Actualiza la lista de jugadores en la UI
@@ -158,6 +174,15 @@ export class GameComponent implements OnInit {
     }
   }
 
+  onChangeGameMode(){
+    this.changeGameMode = !this.changeGameMode
+  }
+
+  saveGameMode(gameMode: string){
+    this.socketService.selectGameMode(this.gameId, gameMode)
+    this.changeGameMode = false
+  }
+
   checkVote(playerNickName: string): boolean {
     return this.votes.some((item) => item.player.nickname == playerNickName);
   }
@@ -214,5 +239,13 @@ export class GameComponent implements OnInit {
       left: `${50 + radiusX * Math.cos((angle * Math.PI) / 180)}%`,
       top: `${50 + radiusY * Math.sin((angle * Math.PI) / 180)}%`,
     };
+  }
+
+  shareLink(){
+    navigator.clipboard.writeText(this.url).then(() => {
+      this.toastService.showToast('Enlace copiado con exito', 3000)
+    }).catch(err => {
+      this.toastService.showToast('Ha ocurrido un error al copiar el enlace', 3000)
+    });
   }
 }

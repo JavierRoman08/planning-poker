@@ -98,6 +98,18 @@ export class SocketService {
     })
   }
 
+  selectGameMode(gameId: string, gameMode: string) {
+    this.socket.emit('selectGameMode', gameId, gameMode)
+  }
+
+  onChangeGameMode(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('selectedGameMode', (data) => {
+        observer.next(data)
+      })
+    })
+  }
+
   onUserDisconnect(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('userListUpdated', (data: any) => {

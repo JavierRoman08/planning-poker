@@ -1,6 +1,46 @@
-<app-modal *ngIf="showInviteModal" (buttonClick)="onShowModal()" />
+
+<app-modal *ngIf="showInviteModal">
+  <div class="title">
+    <app-label [labelText]="'Invitar Jugadores'" />
+    <button class="close__button" (click)="onShowModal()">X</button>
+  </div>
+  <input class="url" disabled value="{{url}}" />
+  <app-button [text]="'Copiar link'" (buttonClick)="shareLink()" />
+</app-modal>
+
+<app-modal *ngIf="changeGameMode">
+  <div class="title">
+    <app-label [labelText]="'Cambiar modo de juego'" />
+    <button class="close__button" (click)="onChangeGameMode()">X</button>
+  </div>
+  <div class="row gap player__form__options">
+    <label class="font-color gap custom-radio">
+      Fibonacci
+      <input
+        type="radio"
+        name="gameMode"
+        value="fibonacci"
+        [(ngModel)]="selectedGameMode"
+      />
+      <span class="radio__button"></span>
+    </label>
+    <label class="font-color gap custom-radio">
+      Horas
+      <input
+        type="radio"
+        name="gameMode"
+        value="hours"
+        [(ngModel)]="selectedGameMode"
+      />
+      <span class="radio__button"></span>
+    </label>
+  </div>
+  
+  <app-button [text]="'Guardar'" (buttonClick)="saveGameMode(selectedGameMode)" />
+</app-modal>
+
 <app-toast></app-toast>
-<div [class.blurred]="showInviteModal">
+<div [class.blurred]="showInviteModal || changeGameMode">
   <app-navbar
     [gameId]="gameId"
     [playerName]="registeredPlayer.nickname"
@@ -56,6 +96,9 @@
     <div class="row button__options">
       <button (click)="changeRole()" class="change__role">
         {{ registeredPlayer.role == "player" ? "Cambiar a modo espectador" : "Cambiar a modo jugador" }}
+      </button>
+      <button (click)="onChangeGameMode()" class="change__gamemode" *ngIf="!showCards">
+        Cambiar Modo de Juego
       </button>
       <button (click)="selectNewAdmin()" class="change__admin" *ngIf="registeredPlayer.isAdmin">
         Asignar administrador
