@@ -26,7 +26,7 @@ describe('CardComponent', () => {
 
     const cardElement = fixture.nativeElement.querySelector('.card');
     expect(cardElement).toBeTruthy();
-    expect(cardElement.classList).toContain('card__spectator'); 
+    expect(cardElement.classList).toContain('card--spectator'); 
   });
 
   it('debe emitir el valor si el usuario es de tipo "player"', () => {

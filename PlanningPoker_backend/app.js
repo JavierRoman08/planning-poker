@@ -21,7 +21,7 @@ const io = new Server(server, {
 const games = {};
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("a user connected", socket.id);
 
   socket.on("createRoom", (data) => {
 
@@ -117,7 +117,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log('player disconnected', socket.id)
+    for (const gameId in games) {
+      const game = games[gameId];
+      const playerIndex = game.players.findIndex((p) => p.playerId === socket.id);
+      if (playerIndex !== -1) {
+        game.players.splice(playerIndex, 1); // Eliminar al jugador de la lista
+        io.to(gameId).emit('userListUpdated', {players: game.players}); // Notificar a todos en la sala
+        break;
+      }
+    }
   });
 });
 

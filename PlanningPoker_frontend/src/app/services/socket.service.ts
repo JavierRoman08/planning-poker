@@ -18,15 +18,7 @@ export class SocketService {
         this.socket.once('gameCreated', (data: any) => resolve(data));
     });
   }
-
-  getCardPool(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('getCardPool', (cards) => {
-        observer.next(cards);
-      });
-    });
-  }
-
+  
   joinRoom(roomId: string, playerInfo: any): Promise<any> {
     this.socket.emit('joinRoom', roomId, playerInfo);
     return new Promise((resolve, reject) => {
@@ -104,5 +96,13 @@ export class SocketService {
         observer.next(data)
       })
     })
+  }
+
+  onUserDisconnect(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('userListUpdated', (data: any) => {
+        observer.next(data);
+      });
+    });
   }
 }
