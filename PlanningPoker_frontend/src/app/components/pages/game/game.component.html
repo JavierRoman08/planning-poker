@@ -130,8 +130,8 @@
         </div>
       </div>
     </div>
-    <div class="cards" *ngIf="isChangingAdmin">
-      <h1>Asigna un administrador 👇</h1>
+    <div class="cards cards__select__admin" *ngIf="isChangingAdmin">
+      <h1 class="">Asigna un administrador 👇</h1>
       <div class="cards__list row">
         <div class="row" *ngFor="let player of playerList">
           <button class="button__change__admin" (click)="makeAdmin(player)" *ngIf="player.playerId !== registeredPlayer.playerId">
